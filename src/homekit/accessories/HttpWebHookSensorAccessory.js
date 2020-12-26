@@ -19,6 +19,10 @@ function HttpWebHookSensorAccessory(ServiceParam, CharacteristicParam, platform,
   this.informationService.setCharacteristic(Characteristic.Model, "HttpWebHookSensorAccessory-" + this.name);
   this.informationService.setCharacteristic(Characteristic.SerialNumber, "HttpWebHookSensorAccessory-" + this.id);
 
+  this.interval = null;
+  this.tick = sensorConfig["tick"] || 1000;
+  this.step = sensorConfig["step"] || 0;
+
   if (this.type === "contact") {
     this.service = new Service.ContactSensor(this.name);
     this.service.getCharacteristic(Characteristic.ContactSensorState).on('get', this.getState.bind(this));
@@ -52,13 +56,32 @@ function HttpWebHookSensorAccessory(ServiceParam, CharacteristicParam, platform,
   }
   else if (this.type === "light") {
     this.service = new Service.LightSensor(this.name);
-    this.service.getCharacteristic(Characteristic.CurrentAmbientLightLevel).on('get', this.getState.bind(this));
+    this.service.getCharacteristic(Characteristic.CurrentAmbientLightLevel).setProps({
+      minValue : 0
+    }).on('get', this.getState.bind(this));
   }
   else if (this.type === "leak") {
     this.service = new Service.LeakSensor(this.name);
     this.service.getCharacteristic(Characteristic.LeakDetected).on('get', this.getState.bind(this));
   }
-}
+};
+
+HttpWebHookSensorAccessory.prototype.onTick = function () {
+
+  var state = this.storage.getItemSync("http-webhook-" + this.id);
+  this.log("state: " + state);
+  let newvalue = Math.round((state - this.step) * 100) / 100; 
+
+  if (newvalue <= 0) {
+    newvalue = 0;
+    clearInterval(this.interval);
+    this.interval = null;
+    this.log("clearInterval");
+  }
+  this.log("Decrement value: " + newvalue);
+  this.storage.setItemSync("http-webhook-" + this.id, newvalue);
+  this.service.getCharacteristic(Characteristic.CurrentAmbientLightLevel).updateValue(newvalue, undefined, Constants.CONTEXT_FROM_WEBHOOK);
+};
 
 HttpWebHookSensorAccessory.prototype.changeFromServer = function(urlParams) {
   var cached = this.storage.getItemSync("http-webhook-" + this.id);
@@ -123,6 +146,17 @@ HttpWebHookSensorAccessory.prototype.changeFromServer = function(urlParams) {
     }
     else if (this.type === "light") {
       urlValue = parseFloat(urlValue)
+
+      if (urlValue <= 0) {
+        clearInterval(this.interval);
+        this.interval = null;
+        this.log("clearInterval");
+      }
+      else if (this.interval == null && this.step > 0) {
+          this.log("setInterval: " + urlValue);
+          this.interval = setInterval(this.onTick.bind(this), this.tick);
+      }
+
       this.service.getCharacteristic(Characteristic.CurrentAmbientLightLevel).updateValue(urlValue, undefined, Constants.CONTEXT_FROM_WEBHOOK);
     }
     else if (this.type === "leak") {
