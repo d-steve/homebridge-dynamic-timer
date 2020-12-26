@@ -15,7 +15,7 @@ Light Sensor
 By default, the timer will run once a minute and decrement the value by 1. Use the following config parameters to change this:
 
   - tick: The interval (in ms).
-  - step: How much to decrement value by this much each interval. Set to 0 to disable.
+  - step: How much to decrement value by each interval. Set to 0 to disable.
 
 Below is the remainder of the forked README.md file with modfications to installation steps and to add config parameters for "tick" and "step".
 
