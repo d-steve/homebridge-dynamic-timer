@@ -30,6 +30,10 @@ function HttpWebHookLightBulbAccessory(ServiceParam, CharacteristicParam, platfo
   this.brightnessHeaders = lightConfig["brightness_headers"] || "{}";
   this.brightnessFactor = lightConfig["brightness_factor"] || 1;
 
+  this.interval = null;
+  this.tick = lightConfig["tick"] || 1000;
+  this.step = lightConfig["step"] || 1;
+
   this.informationService = new Service.AccessoryInformation();
   this.informationService.setCharacteristic(Characteristic.Manufacturer, "HttpWebHooksPlatform");
   this.informationService.setCharacteristic(Characteristic.Model, "HttpWebHookLightAccessory-" + this.name);
@@ -39,6 +43,34 @@ function HttpWebHookLightBulbAccessory(ServiceParam, CharacteristicParam, platfo
   this.service.getCharacteristic(Characteristic.On).on('get', this.getState.bind(this)).on('set', this.setState.bind(this));
   this.service.getCharacteristic(Characteristic.Brightness).on('get', this.getBrightness.bind(this)).on('set', this.setBrightness.bind(this));
 }
+
+HttpWebHookLightBulbAccessory.prototype.onTick = function () {
+
+  var cachedState = this.storage.getItemSync("http-webhook-" + this.id);
+  var cachedBrightness = this.storage.getItemSync("http-webhook-brightness-" + this.id);
+  this.log.debug("cachedState: " + cachedState);
+  this.log.debug("cachedBrightness: " + cachedBrightness);
+  let newValue = parseInt(cachedBrightness - this.step);
+
+  if (cachedState) {
+    if (newValue <= 0) {
+      newValue = 0;
+      clearInterval(this.interval);
+      this.interval = null;
+      this.log("clearInterval for '%s'", this.id); 
+      this.storage.setItemSync("http-webhook-" + this.id, false); 
+      this.service.getCharacteristic(Characteristic.On).updateValue(false, undefined, Constants.CONTEXT_FROM_WEBHOOK);
+    }
+    this.log("Decrement value for '%s': " + newValue, this.id);
+    this.storage.setItemSync("http-webhook-brightness-" + this.id, newValue);
+    var brightnessToSet = Math.ceil(newValue / this.brightnessFactor);
+    this.service.getCharacteristic(Characteristic.Brightness).updateValue(brightnessToSet, undefined, Constants.CONTEXT_FROM_WEBHOOK);
+  } else {
+      clearInterval(this.interval);
+      this.interval = null;
+      this.log("clearInterval for '%s'", this.id); 
+  }
+};
 
 HttpWebHookLightBulbAccessory.prototype.changeFromServer = function(urlParams) {
   var cachedState = this.storage.getItemSync("http-webhook-" + this.id);
@@ -69,6 +101,12 @@ HttpWebHookLightBulbAccessory.prototype.changeFromServer = function(urlParams) {
       this.log("Change HomeKit brightness for light to '%s'.", brightnessToSet);
       this.service.getCharacteristic(Characteristic.On).updateValue(stateBool, undefined, Constants.CONTEXT_FROM_WEBHOOK);
       this.service.getCharacteristic(Characteristic.Brightness).updateValue(brightnessToSet, undefined, Constants.CONTEXT_FROM_WEBHOOK);
+
+      if (this.interval == null && this.step >=1 && brightnessInt > 0) {
+        this.log("setInterval for '%s': " + brightnessInt, this.id);
+        this.interval = setInterval(this.onTick.bind(this), this.tick);
+      }
+
     }
     return {
       "success" : true
@@ -88,6 +126,13 @@ HttpWebHookLightBulbAccessory.prototype.getState = function(callback) {
 HttpWebHookLightBulbAccessory.prototype.setState = function(powerOn, callback, context) {
   this.log("Light state for '%s'...", this.id);
   this.storage.setItemSync("http-webhook-" + this.id, powerOn);
+
+  var cachedBrightness = this.storage.getItemSync("http-webhook-brightness-" + this.id); 
+  if (powerOn && this.interval == null && this.step >=1 && cachedBrightness > 0) {
+    this.log("setInterval for '%s': " + cachedBrightness, this.id);
+    this.interval = setInterval(this.onTick.bind(this), this.tick); 
+  } 
+
   var urlToCall = this.onURL;
   var urlMethod = this.onMethod;
   var urlBody = this.onBody;
@@ -122,10 +167,10 @@ HttpWebHookLightBulbAccessory.prototype.getBrightness = function(callback) {
 HttpWebHookLightBulbAccessory.prototype.setBrightness = function(brightness, callback, context) {
   this.log("Light brightness for '%s'...", this.id);
   var newState = brightness > 0;
-  this.storage.setItemSync("http-webhook-" + this.id, newState);
-  this.storage.setItemSync("http-webhook-brightness-" + this.id, brightness);
   var brightnessFactor = this.brightnessFactor;
   var brightnessToSet = Math.ceil(brightness * brightnessFactor);
+  this.storage.setItemSync("http-webhook-" + this.id, newState);
+  this.storage.setItemSync("http-webhook-brightness-" + this.id, brightnessToSet);
   var urlToCall = this.replaceVariables(this.brightnessURL, newState, brightnessToSet);
   var urlMethod = this.brightnessMethod;
   var urlBody = this.brightnessBody;
@@ -140,6 +185,11 @@ HttpWebHookLightBulbAccessory.prototype.setBrightness = function(brightness, cal
   }
 
   Util.callHttpApi(this.log, urlToCall, urlMethod, urlBody, urlForm, urlHeaders, this.rejectUnauthorized, callback, context);
+
+  if (this.interval == null && this.step >=1 && brightnessToSet > 0) {
+    this.log("setInterval for '%s': " + brightnessToSet, this.id);
+    this.interval = setInterval(this.onTick.bind(this), this.tick);
+  }
 };
 
 HttpWebHookLightBulbAccessory.prototype.replaceVariables = function(text, state, brightness) {
