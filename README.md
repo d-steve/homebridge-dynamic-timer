@@ -190,7 +190,7 @@ Example config.json:
                         "id": "sensor8",
                         "name": "Sensor name 8",
                         "tick": 60000, // (optional, default 60000). The interval (number of ticks in ms) to decrement. 
-                        "step": 1, // (optional, default 0). Set to non-zero to decrement value by this much each interval.
+                        "step": 1, // (optional, default 1). How much to decrement value by this much each interval. Set to 0 to disable.
                         "type": "light"
                     },
                     {
