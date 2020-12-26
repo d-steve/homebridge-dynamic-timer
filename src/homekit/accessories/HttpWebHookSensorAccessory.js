@@ -20,7 +20,7 @@ function HttpWebHookSensorAccessory(ServiceParam, CharacteristicParam, platform,
   this.informationService.setCharacteristic(Characteristic.SerialNumber, "HttpWebHookSensorAccessory-" + this.id);
 
   this.interval = null;
-  this.tick = sensorConfig["tick"] || 1000;
+  this.tick = sensorConfig["tick"] || 60000;
   this.step = sensorConfig["step"] || 0;
 
   if (this.type === "contact") {
@@ -70,17 +70,17 @@ HttpWebHookSensorAccessory.prototype.onTick = function () {
 
   var state = this.storage.getItemSync("http-webhook-" + this.id);
   this.log("state: " + state);
-  let newvalue = Math.round((state - this.step) * 100) / 100; 
+  let newValue = Math.round((state - this.step) * 100) / 100; 
 
-  if (newvalue <= 0) {
-    newvalue = 0;
+  if (newValue <= 0) {
+    newValue = 0;
     clearInterval(this.interval);
     this.interval = null;
     this.log("clearInterval");
   }
-  this.log("Decrement value: " + newvalue);
-  this.storage.setItemSync("http-webhook-" + this.id, newvalue);
-  this.service.getCharacteristic(Characteristic.CurrentAmbientLightLevel).updateValue(newvalue, undefined, Constants.CONTEXT_FROM_WEBHOOK);
+  this.log("Decrement value: " + newValue);
+  this.storage.setItemSync("http-webhook-" + this.id, newValue);
+  this.service.getCharacteristic(Characteristic.CurrentAmbientLightLevel).updateValue(newValue, undefined, Constants.CONTEXT_FROM_WEBHOOK);
 };
 
 HttpWebHookSensorAccessory.prototype.changeFromServer = function(urlParams) {
