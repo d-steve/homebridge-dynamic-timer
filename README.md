@@ -33,9 +33,9 @@ Currently supports contact, motion, occupancy, smoke sensors, switches, push but
 2. Install this plugin using: `npm install -g homebridge-http-webhooks`
 3. Update your configuration file. See sample-config.json snippet below.
 4. Navigate to your homebridge/node_modules/homebridge-http-webhooks/src/homekit/accessories/ directory.
-5a. For LightBulbs: Replace the HttpWebHookLightBulbAccessory.js file with the one from this project (under src/homekit/accessories).
-5b. For Light Sensors: Replace the HttpWebHookSensorAccessory.js file with the one from this project (under src/homekit/accessories).
-6. Restart HomeBridge
+5. For LightBulbs: Replace the HttpWebHookLightBulbAccessory.js file with the one from this project (under src/homekit/accessories).
+6. For Light Sensors: Replace the HttpWebHookSensorAccessory.js file with the one from this project (under src/homekit/accessories).
+7. Restart HomeBridge.
 
 # Retrieve state
 To retrieve the current state you need to call the url `http://yourHomebridgeServerIp:webhook_port/?accessoryId=theAccessoryIdToTrigger`
