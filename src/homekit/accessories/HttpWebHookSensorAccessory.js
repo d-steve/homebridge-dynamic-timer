@@ -21,7 +21,7 @@ function HttpWebHookSensorAccessory(ServiceParam, CharacteristicParam, platform,
 
   this.interval = null;
   this.tick = sensorConfig["tick"] || 60000;
-  this.step = sensorConfig["step"] || 0;
+  this.step = sensorConfig["step"] || 1;
 
   if (this.type === "contact") {
     this.service = new Service.ContactSensor(this.name);
