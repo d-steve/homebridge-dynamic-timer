@@ -1,4 +1,27 @@
+# homebridge-http-webhooks-countdown
+
+This is fork of [benzman81/homebridge-http-webhooks](https://github.com/benzman81/homebridge-http-webhooks) with modifications to the LightBulb and Light Sensor types for decrementing the values in order to use them as dynamic countdown timers. No changes for any other types.
+
+The main purpose for this is to allow you to set dynamic countdown timers to be used to trigger Home Automations in HomeKit.
+
+LightBulb 
+- Pro: main benefit is that you can create Home Automations using the Home app.
+- Pro: the timer can be paused/unpaused by turning off/on the light without changing the brightness.
+- Con: the Home app expects the value to be a percentage of full brightness, so by default, the Home app will show 100% until the timer falls below 100 minutes left. You can use the "brightness_factor" config parameter to adjust this (ex: set brightness_factor to 10 to show brightness as the percent remaining out of 1000).
+
+Light Sensor 
+- Pro: main benefit is that the sensor lux value will show the exact value instead of trying to fit it into a range of 0-100%.
+- Con: the Home app cannot create Home Automations triggered by light sensors. Use a 3rd party iOS app (ex: Eve for Homekit, Controller for HomeKit) to create Home Automations for light sensors. Note: once created, the actions can then be modified within the Home app.
+
+By default, the timer will run once a minute and decrement the value by 1. Use the following config parameters to change this:
+
+  tick: The interval (number of ticks in ms)
+  step: How much to decrement value by this much each interval. Set to 0 to disable.
+
+Below is the remainder of the forked README.md file with modfications to installation steps and to add config parameters for "tick" and "step".
+
 # homebridge-http-webhooks
+
 A http plugin with support of webhooks for [Homebridge](https://github.com/nfarina/homebridge).
 
 The plugin gets its states from any system that is calling the url to trigger a state change.
@@ -9,6 +32,10 @@ Currently supports contact, motion, occupancy, smoke sensors, switches, push but
 1. Install homebridge using: `npm install -g homebridge`
 2. Install this plugin using: `npm install -g homebridge-http-webhooks`
 3. Update your configuration file. See sample-config.json snippet below.
+4. Navigate to your homebridge/node_modules/homebridge-http-webhooks/src/homekit/accessories/ directory.
+5. For LightBulbs: Replace the HttpWebHookLightBulbAccessory.js file with the one from this project. 
+6. For Light Sensors: Replace the HttpWebHookSensorAccessory.js file with the one from this project. 
+7. Restart HomeBridge
 
 # Retrieve state
 To retrieve the current state you need to call the url `http://yourHomebridgeServerIp:webhook_port/?accessoryId=theAccessoryIdToTrigger`
@@ -229,6 +256,8 @@ Example config.json:
                     {
                         "id": "light1",
                         "name": "Light name 1",
+                        "tick": 60000, // (optional, default 60000). The interval (number of ticks in ms) to decrement. 
+                        "step": 1, // (optional, default 1). How much to decrement value by this much each interval. Set to 0 to disable.
                         "rejectUnauthorized": false, // (optional)
                         "on_url": "your url to switch the light on", // (optional)
                         "on_method": "GET", // (optional)
