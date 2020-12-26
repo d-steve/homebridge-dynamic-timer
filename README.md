@@ -5,8 +5,7 @@ This is fork of [benzman81/homebridge-http-webhooks](https://github.com/benzman8
 The main purpose for this is to allow you to set dynamic countdown timers to be used to trigger Home Automations in HomeKit.
 
 LightBulb 
-- Pro: main benefit is that you can create Home Automations using the Home app.
-- Pro: the timer can be paused/unpaused by turning off/on the light without changing the brightness.
+- Pro: main benefit is that you can create Home Automations using the Home app for when the light bulb turns off.
 - Con: the Home app expects the value to be a percentage of full brightness, so by default, the Home app will show 100% until the timer falls below 100 minutes left. You can use the "brightness_factor" config parameter to adjust this (ex: set brightness_factor to 10 to show brightness as the percent remaining out of 1000).
 
 Light Sensor 
