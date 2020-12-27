@@ -21,7 +21,7 @@ function HttpWebHookSensorAccessory(ServiceParam, CharacteristicParam, platform,
 
   this.interval = null;
   this.tick = sensorConfig["tick"] || 60000;
-  this.step = sensorConfig["step"] || 1;
+  this.step = sensorConfig["step"] || 0;
 
   if (this.type === "contact") {
     this.service = new Service.ContactSensor(this.name);
@@ -69,16 +69,16 @@ function HttpWebHookSensorAccessory(ServiceParam, CharacteristicParam, platform,
 HttpWebHookSensorAccessory.prototype.onTick = function () {
 
   var state = this.storage.getItemSync("http-webhook-" + this.id);
-  this.log("state: " + state);
+  this.log.debug("state: " + state);
   let newValue = Math.round((state - this.step) * 100) / 100; 
 
   if (newValue <= 0) {
     newValue = 0;
     clearInterval(this.interval);
     this.interval = null;
-    this.log("clearInterval");
+    this.log.debug("clearInterval");
   }
-  this.log("Decrement value: " + newValue);
+  this.log.debug("Decrement value: " + newValue);
   this.storage.setItemSync("http-webhook-" + this.id, newValue);
   this.service.getCharacteristic(Characteristic.CurrentAmbientLightLevel).updateValue(newValue, undefined, Constants.CONTEXT_FROM_WEBHOOK);
 };
@@ -150,10 +150,10 @@ HttpWebHookSensorAccessory.prototype.changeFromServer = function(urlParams) {
       if (urlValue <= 0) {
         clearInterval(this.interval);
         this.interval = null;
-        this.log("clearInterval");
+        this.log.debug("clearInterval");
       }
       else if (this.interval == null && this.step > 0) {
-          this.log("setInterval: " + urlValue);
+          this.log.debug("setInterval: " + urlValue);
           this.interval = setInterval(this.onTick.bind(this), this.tick);
       }
 
