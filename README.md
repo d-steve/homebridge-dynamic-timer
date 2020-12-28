@@ -16,6 +16,7 @@ By default, the timer will run once a minute and decrement the value by 1. Use t
 
   - tick: The interval (in ms).
   - step: How much to decrement value by each interval. Set to 0 to disable.
+  - relative: for LightBulb only. When 1, display brightness as a percent of originally set value remaining instead of number of intervals remaining. Default 0
 
 Below is the remainder of the forked README.md file with modfications to installation steps and to add config parameters for "tick" and "step".
 
@@ -257,6 +258,7 @@ Example config.json:
                         "name": "Light name 1",
                         "tick": 60000, // (optional, default 60000). The interval (number of ticks in ms) to decrement. 
                         "step": 1, // (optional, default 1). How much to decrement value by this much each interval. Set to 0 to disable.
+                        "relative": 0, // (optional, default 0). Display remaining time as percentage of time remaining instead of number of intervals left.
                         "rejectUnauthorized": false, // (optional)
                         "on_url": "your url to switch the light on", // (optional)
                         "on_method": "GET", // (optional)
