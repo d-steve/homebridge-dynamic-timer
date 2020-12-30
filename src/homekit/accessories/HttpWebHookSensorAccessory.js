@@ -10,7 +10,7 @@ function HttpWebHookSensorAccessory(ServiceParam, CharacteristicParam, platform,
 
   this.id = sensorConfig["id"];
   this.name = sensorConfig["name"];
-  this.type = sensorConfig["type"];
+  this.type = sensorConfig["type"] || "light";
   this.autoRelease = sensorConfig["autoRelease"];
   this.autoReleaseTime = sensorConfig["autoReleaseTime"] || Constants.DEFAULT_SENSOR_TIMEOUT;
 

@@ -90,10 +90,7 @@
               "title": "Type",
               "type": "string",
               "placeholder": "light",
-              "required": false,
-              "enum": [
-                "light"
-              ]
+              "required": false
             },
             "autoRelease": {
               "title": "Enable Auto Release",
@@ -210,13 +207,8 @@
             "brightness_factor": {
               "title": "Brightness Factor",
               "type": "number",
-              "placeholder": 2.55,
-              "required": false,
-              "typeahead": {
-                "source": [
-                  2.55
-                ]
-              }
+              "placeholder": 1,
+              "required": false
             }
           }
         }
