@@ -1,3 +1,7 @@
+#### 0.1.13 (2020-12-30)
+
+  - Fixed config issues
+
 ### 0.1.12 (2020-12-30)
 
   - Implemented countdown timers for lightbulb and light sensor accessories. Other accessories removed.
