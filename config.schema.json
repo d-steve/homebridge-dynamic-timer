@@ -1,9 +1,9 @@
 {
-  "pluginAlias": "HttpWebHooks-countdown",
+  "pluginAlias": "dynamic-timer",
   "pluginType": "platform",
   "singular": true,
-  "headerDisplay": "A `http` plugin with support of webhooks for homebridge that allows setting an arbitrary brightness of a lightbulb or light sensor to be used as dynamic timer in a Home Automation.",
-  "footerDisplay": "Visit the Project [Readme](https://github.com/d-steve/homebridge-http-webhooks-countdown#readme) for more details.",
+  "headerDisplay": "A plugin for homebridge that allows setting an arbitrary brightness of a lightbulb or light sensor to be used as dynamic timer in a Home Automation.",
+  "footerDisplay": "Visit the Project [Readme](https://github.com/d-steve/homebridge-dynamic-timer#readme) for more details.",
   "schema": {
     "type": "object",
     "properties": {
@@ -218,12 +218,12 @@
   "layout": [
     {
       "type": "fieldset",
-      "title": "Webhook Settings",
+      "title": "Dynamic Timer Settings",
       "expandable": true,
       "expanded": false,
       "items": [
         {
-          "title": "Webhook Settings",
+          "title": "Dynamic Timer Settings",
           "type": "array",
           "orderable": false,
           "items": [
@@ -241,7 +241,7 @@
     },
     {
       "type": "fieldset",
-      "title": "Webhook Devices",
+      "title": "Dynamic Timer Devices",
       "expandable": true,
       "expanded": false,
       "items": [

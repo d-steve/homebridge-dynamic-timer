@@ -3,7 +3,7 @@ var HttpWebHookSensorAccessory = require('./src/homekit/accessories/HttpWebHookS
 var HttpWebHookLightBulbAccessory = require('./src/homekit/accessories/HttpWebHookLightBulbAccessory');
 
 module.exports = function(homebridge) {
-  homebridge.registerPlatform("homebridge-http-webhooks-countdown", "HttpWebHooks-countdown", HttpWebHooksPlatform);
-  homebridge.registerAccessory("homebridge-http-webhooks-countdown", "HttpWebHookSensor-countdown", HttpWebHookSensorAccessory);
-  homebridge.registerAccessory("homebridge-http-webhooks-countdown", "HttpWebHookLight-countdown", HttpWebHookLightBulbAccessory);
+  homebridge.registerPlatform("homebridge-dynamic-timer", "dynamic-timer", HttpWebHooksPlatform);
+  homebridge.registerAccessory("homebridge-dynamic-timer", "Sensor-dynamic-timer", HttpWebHookSensorAccessory);
+  homebridge.registerAccessory("homebridge-dynamic-timer", "Light-dynamic-timer", HttpWebHookLightBulbAccessory);
 };

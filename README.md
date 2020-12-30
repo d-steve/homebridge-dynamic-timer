@@ -1,4 +1,4 @@
-# homebridge-http-webhooks-countdown
+# homebridge-dynamic-timer
 
 This is fork of [benzman81/homebridge-http-webhooks](https://github.com/benzman81/homebridge-http-webhooks) with modifications to the LightBulb and Light Sensor types for decrementing the values in order to use them as dynamic countdown timers. Other accessories have been removed.
 
@@ -22,14 +22,9 @@ Below is the remainder of the forked README.md file with changes to reflect modi
 
 # Installation
 1. Install homebridge using: `npm install -g homebridge`
-2. Install this plugin using: `npm install -g homebridge-http-webhooks`
+2. Install this plugin using: `npm install -g homebridge-dynamic-timer`
 3. Update your configuration file. See sample-config.json snippet below.
-4. Navigate to your homebridge/node_modules/homebridge-http-webhooks/src/homekit/accessories/ directory.
-5. For LightBulbs: Replace the HttpWebHookLightBulbAccessory.js file with the one from this project (under src/homekit/accessories).
-6. For Light Sensors: Replace the HttpWebHookSensorAccessory.js file with the one from this project (under src/homekit/accessories).
-7. Restart HomeBridge.
-
-NOTE: expect to release as an NPM soon(-ish)!
+4. Restart HomeBridge.
 
 # Retrieve state
 To retrieve the current state you need to call the url `http://yourHomebridgeServerIp:webhook_port/?accessoryId=theAccessoryIdToTrigger`
@@ -67,8 +62,8 @@ Example config.json:
     {
         "platforms": [
             {
-                "platform": "HttpWebHooks",
-                "webhook_port": "51828",
+                "platform": "dynamic-timer",
+                "webhook_port": "51888",
                 "webhook_listen_host": "::", // (optional, default: "0.0.0.0")
                 "webhook_enable_cors": true, // (optional, default: false)
                 "cache_directory": "./.node-persist/storage", // (optional, default: "./.node-persist/storage")
@@ -116,6 +111,7 @@ Example config.json:
 
 ## Cache directory storage (cache_directory)
 The cache directory is used to cache the state of the accessories. It must point to a **valid** and **empty** directory and the user that runs homebridge must have **write access**.
+Docker uses will need to specify a writable path, ex: /homebridge/.node-persist/storage.
 
 ## HTTPS
 If you want to create a secure connection for the webhooks you need to enable it by setting *https* to true. Then a self signed
