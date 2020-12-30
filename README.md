@@ -4,9 +4,9 @@ This is fork of [benzman81/homebridge-http-webhooks](https://github.com/benzman8
 
 The main purpose for this is to allow you to set dynamic countdown timers to be used to trigger Home Automations in HomeKit.
 
-LightBulb 
+Light (LightBulb) 
 - Pro: main benefit is that you can create Home Automations using the Home app for when the light bulb turns off.
-- Con: the Home app expects the value to be a percentage of full brightness, so by default, the Home app will show 100% until the timer falls below 100 minutes left. You can use the "brightness_factor" config parameter to adjust this (ex: set brightness_factor to 10 to show brightness as the percent remaining out of 1000).
+- Con: the Home app expects the value to be a percentage of full brightness, so by default, the Home app will show 100% until the timer falls below 100 minutes left. You can use the "brightness_factor" config parameter to adjust this (ex: set brightness_factor to 10 to show brightness as the percent remaining out of 1000), or you can use the "relative" config parameter to adjust this to percentage remaining.
 
 Light Sensor 
 - Pro: main benefit is that the sensor lux value will show the exact value instead of trying to fit it into a range of 0-100%.
@@ -17,8 +17,6 @@ By default, the timer will run once a minute and decrement the value by 1. Use t
   - tick: The interval (in ms).
   - step: How much to decrement value by each interval. Set to 0 to disable.
   - relative: for LightBulb only. When 1, display brightness as a percent of originally set value remaining instead of number of intervals remaining. Default 0
-
-Below is the remainder of the forked README.md file with changes to reflect modifications:
 
 # Installation
 1. Install homebridge using: `npm install -g homebridge`
@@ -36,25 +34,13 @@ The returned JSON format is:
     }
 ```
 
-# Trigger change for boolean accessory
-To trigger a change of a boolean accessory you need to call the url `http://yourHomebridgeServerIp:webhook_port/?accessoryId=theAccessoryIdToTrigger&state=NEWSTATE`
+# Update a Light accessory
+To trigger a change of a Light accessory you need to call the url `http://yourHomebridgeServerIp:webhook_port/?accessoryId=theAccessoryIdToTrigger&state=NEWSTATE&value=NEWVALUE`
 
-## Light
-For lights the value for `NEWSTATE` is either `true` for on or `false` for off.
+`NEWSTATE` is either `true` for on or `false` for off.
 
-# Trigger action
-
-## Light
-For lights you can trigger a url of any system for switching the light on or off.
-
-# Update a numeric accessory
-To update a numeric accessory you need to call the url `http://yourHomebridgeServerIp:webhook_port/?accessoryId=theAccessoryIdToUpdate&value=NEWVALUE`
-
-## Light sensor
-For light sensors the value for `NEWVALUE` is the new light intensity in lux (as float).
-
-## Light (brightness)
-For light brightness the value for `NEWVALUE` is the new light brightness (as integer, between 0 and 100 with respect to brightness factor).
+# Update a Light Sensor accessory
+To trigger a change of a Light Sensor accessory you need to call the url `http://yourHomebridgeServerIp:webhook_port/?accessoryId=theAccessoryIdToTrigger&value=NEWVALUE`
 
 # Configuration
 Example config.json:
