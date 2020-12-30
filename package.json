@@ -1,5 +1,5 @@
 {
-  "name": "@d-steve/homebridge-http-webhooks-countdown",
+  "name": "homebridge-http-webhooks-countdown",
   "version": "0.1.12",
   "displayName": "Homebridge Webhooks-Countdown",
   "description": "A http plugin with support of dynamic timers via webhooks for Homebridge: https://github.com/nfarina/homebridge",
