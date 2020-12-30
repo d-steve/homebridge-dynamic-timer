@@ -1,4 +1,4 @@
-#### 0.1.12 (2020-12-30)
+### 0.1.12 (2020-12-30)
 
   - Implemented countdown timers for lightbulb and light sensor accessories. Other accessories removed.
 
