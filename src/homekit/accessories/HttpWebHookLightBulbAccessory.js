@@ -31,7 +31,7 @@ function HttpWebHookLightBulbAccessory(ServiceParam, CharacteristicParam, platfo
   this.brightnessFactor = lightConfig["brightness_factor"] || 1;
 
   this.interval = null;
-  this.tick = lightConfig["tick"] || 1000;
+  this.tick = lightConfig["tick"] || 60000;
   this.step = lightConfig["step"] || 1;
   this.relative = lightConfig["relative"] || 0;
 
