@@ -1,8 +1,8 @@
 {
-  "name": "homebridge-http-webhooks",
-  "version": "0.1.11",
-  "displayName": "Homebridge Webhooks",
-  "description": "A http plugin with support of webhooks for Homebridge: https://github.com/nfarina/homebridge",
+  "name": "@d-steve/homebridge-http-webhooks-countdown",
+  "version": "0.1.12",
+  "displayName": "Homebridge Webhooks-Countdown",
+  "description": "A http plugin with support of dynamic timers via webhooks for Homebridge: https://github.com/nfarina/homebridge",
   "license": "GPL-3.0",
   "keywords": [
     "homebridge-plugin",
@@ -10,16 +10,19 @@
     "plugin",
     "http",
     "webhook",
+    "timer",
+    "dummy",
+    "delay",
     "smart",
     "homekit",
     "siri"
   ],
   "repository": {
     "type": "git",
-    "url": "git@github.com:benzman81/homebridge-http-webhooks.git"
+    "url": "git+ssh://git@github.com/d-steve/homebridge-http-webhooks-countdown.git"
   },
   "bugs": {
-    "url": "https://github.com/benzman81/homebridge-http-webhooks/issues"
+    "url": "https://github.com/d-steve/homebridge-http-webhooks-countdown/issues"
   },
   "engines": {
     "node": ">=9.11.2",
@@ -31,6 +34,10 @@
     "request": "2.87.x",
     "selfsigned": "^1.10.7"
   },
-  "homepage": "https://github.com/benzman81/homebridge-http-webhooks#readme",
-  "author": "benzman81"
+  "homepage": "https://github.com/d-steve/homebridge-http-webhooks-countdown#readme",
+  "author": "d-steve",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
 }
