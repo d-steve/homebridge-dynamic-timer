@@ -1,3 +1,7 @@
+#### 0.1.14 (2020-12-30)
+
+  - Fixed more config issues
+
 #### 0.1.13 (2020-12-30)
 
   - Fixed config issues
