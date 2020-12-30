@@ -1,3 +1,16 @@
+#### 0.1.12 (2020-12-30)
+
+  - Implemented countdown timers for lightbulb and light sensor accessories. Other accessories removed.
+
+##### Other Changes
+
+* ". ([fe99dcaf](https://github.com/d-steve/homebridge-http-webhooks-countdown/commit/fe99dcafd2ae092dca287d50e5068adb26df118b))
+* D ([9f349f1b](https://github.com/d-steve/homebridge-http-webhooks-countdown/commit/9f349f1b1891bf51aa56d542482b0417e1eb668a))
+* //github.com/homebridge/homebridge/issues/2503) ([3c101932](https://github.com/d-steve/homebridge-http-webhooks-countdown/commit/3c10193232b85b92446733280f0da9fbd2f7661c))
+* //github.com/kaowiec/homebridge-http-webhooks into kaowiec-master ([7b2b23bc](https://github.com/d-steve/homebridge-http-webhooks-countdown/commit/7b2b23bcd52b291cb52c6666933a10ab3fece1e2))
+* //github.com/BetoRn/homebridge-http-webhooks into BetoRn-master ([4eb0cd4a](https://github.com/d-steve/homebridge-http-webhooks-countdown/commit/4eb0cd4a29957a6a08abcb9a219f5a09a3be84aa))
+*  Now Uses the Characteristic's Enumeration for Value Reporting. ([401b902b](https://github.com/d-steve/homebridge-http-webhooks-countdown/commit/401b902b5fcf5230344a733a05132f3bbe91581b))
+
 ### 0.1.11
 
 Bugfix:
