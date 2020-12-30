@@ -1,6 +1,6 @@
 {
   "name": "homebridge-http-webhooks-countdown",
-  "version": "0.1.12",
+  "version": "0.1.13",
   "displayName": "Homebridge Webhooks-Countdown",
   "description": "A http plugin with support of dynamic timers via webhooks for Homebridge: https://github.com/nfarina/homebridge",
   "license": "GPL-3.0",
