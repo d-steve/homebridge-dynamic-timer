@@ -60,8 +60,8 @@ Example config.json:
                 "https_certfile": "/pathToKeyFile/server.cert", // (beta state, optional, only if you like to secure your api using ssl certificate)
                 "sensors": [
                     {
-                        "id": "sensor8",
-                        "name": "Sensor name 8",
+                        "id": "sensor1",
+                        "name": "Sensor name 1",
                         "tick": 60000, // (optional, default 60000). The interval (number of ticks in ms) to decrement. 
                         "step": 1, // (optional, default 1). How much to decrement value by this much each interval. Set to 0 to disable.
                         "type": "light"
@@ -87,7 +87,7 @@ Example config.json:
                         "brightness_method": "GET", // (optional)
                         "brightness_body": "{ \"on\" : %statusPlaceholder, \"bri\" : %brightnessPlaceholder}", // (optional only for POST and PUT; use "brightness_form" for x-www-form-urlencoded JSON, variables are replaced on the fly)
                         "brightness_headers": "{\"Authorization\": \"Bearer ABCDEFGH\", \"Content-Type\": \"application/json\"}", // (optional)
-                        "brightness_factor": 2.55 // (optional to convert homekit brightness to target system brightness)
+                        "brightness_factor": 2.55 // (optional to display as % of 100*value and to convert homekit brightness to target system brightness)
                     }
                 ]
             }
