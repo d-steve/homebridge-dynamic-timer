@@ -4,6 +4,6 @@ var HttpWebHookLightBulbAccessory = require('./src/homekit/accessories/HttpWebHo
 
 module.exports = function(homebridge) {
   homebridge.registerPlatform("homebridge-dynamic-timer", "dynamic-timer", HttpWebHooksPlatform);
-  homebridge.registerAccessory("homebridge-dynamic-timer", "Sensor-dynamic-timer", HttpWebHookSensorAccessory);
-  homebridge.registerAccessory("homebridge-dynamic-timer", "Light-dynamic-timer", HttpWebHookLightBulbAccessory);
+  homebridge.registerAccessory("homebridge-dynamic-timer", "Sensor", HttpWebHookSensorAccessory);
+  homebridge.registerAccessory("homebridge-dynamic-timer", "Light", HttpWebHookLightBulbAccessory);
 };
