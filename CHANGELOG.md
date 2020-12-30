@@ -1,3 +1,7 @@
+#### 0.1.15 (2020-12-30)
+
+  - README changes only 
+
 #### 0.1.14 (2020-12-30)
 
   - Fixed more config issues
