@@ -111,7 +111,8 @@ Example config.json:
 
 ## Cache directory storage (cache_directory)
 The cache directory is used to cache the state of the accessories. It must point to a **valid** and **empty** directory and the user that runs homebridge must have **write access**.
-Docker uses will need to specify a writable path, ex: /homebridge/.node-persist/storage.
+
+Docker users will need to specify a writable path (ex: /homebridge/.node-persist/storage) or it will fail to load with "EACCES: permission denied".
 
 ## HTTPS
 If you want to create a secure connection for the webhooks you need to enable it by setting *https* to true. Then a self signed
