@@ -1,6 +1,6 @@
 {
   "name": "homebridge-dynamic-timer",
-  "version": "0.1.13",
+  "version": "0.1.14",
   "displayName": "Homebridge Dynamic Timer",
   "description": "A plugin with support of dynamic timers via webhooks for Homebridge: https://github.com/nfarina/homebridge",
   "license": "GPL-3.0",
